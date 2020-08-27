@@ -1,42 +1,51 @@
 server:
-  port : 8002
+  port: 8002
 app:
-    datasource:
-        jdbc-url:   jdbc:postgresql://localhost:5432/springfirstapp
-        username:   postgres
-        password:   db
-        pool-size:  30
-    mongodb:
-        host: localhost
-        port: 27017
-        database: springfirstapp
-        uri: mongodb://localhost:27017
+  datasource:
+    jdbc-url: jdbc:postgresql://localhost:5432/springfirstapp
+    username: postgres
+    password: db
+    pool-size: 30
+  mongodb:
+    host: localhost
+    port: 27017
+    database: springfirstapp
+    uri: mongodb://localhost:27017
 spring:
   data:
     mongodb:
       host: localhost
       port: 27017
       database: frontview
-axon:
-  kafka:
-    bootstrap-servers: localhost:9092
-    client-id: kafka-axon-example
-    default-topic: local.event
-    producer:
-      retries: 0    
-      transaction-id-prefix: kafka-sample
-      event-processor-mode: subscribing
-    #   bootstrapservers: localhost:9092
+# axon:
+#   # serializer:
+#   #   events: jackson
+#   #   general: jackson
+#   #   messages: jackson
+#   kafka:
+#     bootstrap-servers: localhost:9092
+#     client-id: kafka-axon-example
+#     default-topic: account_topic
 
-    consumer:
-      group-id: "local.event.consumer-group"
-      enable-auto-commit: true
-      auto-commit-interval: 3000
-      event-processor-mode: tracking
-      # For additional unnamed properties, add them to the `properties` map like so
+#     # eventhandling:
+#     #     processors:
+#     #       Accounts:
+#     #         source: kafkaMessageSource
+#     producer:
+#       retries: 0
+#       transaction-id-prefix: kafka-sample
+#       event-processor-mode: subscribing
+#     #   bootstrapservers: localhost:9092
 
-    publisher:
-      confirmation-mode: transactional
+#     consumer:
+#       group-id: account-command-group
+#       enable-auto-commit: true
+#       auto-commit-interval: 3000
+#       event-processor-mode: tracking
+#       # For additional unnamed properties, add them to the `properties` map like so
 
-    properties:
-      security.protocol: PLAINTEXT
+#     # publisher:
+#     #   confirmation-mode: transactional
+
+#     properties:
+#       security.protocol: PLAINTEXT

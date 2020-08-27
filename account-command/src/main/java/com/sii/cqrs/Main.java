@@ -1,8 +1,8 @@
 package com.sii.cqrs;
 
-import org.axonframework.extensions.kafka.autoconfig.KafkaAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.kafka.KafkaAutoConfiguration;
 
 @SpringBootApplication(exclude = KafkaAutoConfiguration.class)
 public class Main {

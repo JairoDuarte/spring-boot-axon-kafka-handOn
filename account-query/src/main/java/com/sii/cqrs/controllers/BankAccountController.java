@@ -1,23 +1,14 @@
 package com.sii.cqrs.controllers;
 
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.axonframework.commandhandling.gateway.CommandGateway;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import com.sii.cqrs.model.BankAccount;
+import com.sii.cqrs.repository.BankAccountRepository;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
-
-import com.sii.cqrs.commands.AddBankAccountCommand;
-import com.sii.cqrs.commands.RemoveBankAccountCommand;
-import com.sii.cqrs.commands.UpdateBalanceBankAccountCommand;
-import com.sii.cqrs.dto.BankAccountDTO;
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
@@ -25,26 +16,10 @@ import com.sii.cqrs.dto.BankAccountDTO;
 @RequestMapping("/bank-accounts")
 public class BankAccountController {
 
-    private CommandGateway commandGateway;
+    private BankAccountRepository repository;
 
-    @PostMapping
-    public CompletableFuture<String> create(@RequestBody BankAccountDTO dto) {
-        var command = new AddBankAccountCommand(UUID.randomUUID().toString(), dto.getName());
-        log.info("Executing command: {}", command);
-        return commandGateway.send(command);
-    }
-
-    @PutMapping("/{id}/balances")
-    public CompletableFuture<String> updateBalance(@PathVariable String id, @RequestBody BankAccountDTO dto) {
-        var command = new UpdateBalanceBankAccountCommand(id, dto.getBalance());
-        log.info("Executing command: {}", command);
-        return commandGateway.send(command);
-    }
-
-    @DeleteMapping("/{id}")
-    public CompletableFuture<String> remove(@PathVariable String id) {
-        var command = new RemoveBankAccountCommand(id);
-        log.info("Executing command: {}", command);
-        return commandGateway.send(command);
+    @GetMapping
+    public ResponseEntity<Iterable<BankAccount>> getAll() {
+        return ResponseEntity.ok(repository.findAll());
     }
 }
